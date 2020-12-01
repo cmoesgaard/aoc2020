@@ -1,3 +1,4 @@
+import math
 from itertools import combinations
 
 with open('input/1', 'r') as f:
@@ -5,20 +6,19 @@ with open('input/1', 'r') as f:
 
 
 def find_values(number_list, num_of_combinations):
-    for comb in combinations(number_list, num_of_combinations):
-        if sum(comb) == 2020:
-            return comb
+    combis = combinations(number_list, num_of_combinations)
+    filtered = filter(lambda x: sum(x) == 2020, combis)
+    prods = map(math.prod, filtered)
+    return prods
 
 
 def part_one():
-    a, b = find_values(numbers, 2)
-    return a * b
+    return find_values(numbers, 2)
 
 
 def part_two():
-    a, b, c = find_values(numbers, 3)
-    return a * b * c
+    return find_values(numbers, 3)
 
 
-print(part_one())
-print(part_two())
+print(list(part_one()))
+print(list(part_two()))
