@@ -16,13 +16,13 @@ def find_products(numbers, num_of_combinations):
 
 def part_one():
     numbers = get_numbers()
-    return find_products(numbers, 2)
+    return next(find_products(numbers, 2))
 
 
 def part_two():
     numbers = get_numbers()
-    return find_products(numbers, 3)
+    return next(find_products(numbers, 3))
 
 
-print(list(part_one()))
-print(list(part_two()))
+print(part_one())
+print(part_two())
