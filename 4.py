@@ -1,6 +1,9 @@
+from more_itertools import split_at, flatten
+
+
 def get_input():
     with open('input/4', 'r') as f:
-        return f.read().strip()
+        return [line.strip() for line in f.readlines()]
 
 
 def validate(passport):
@@ -44,15 +47,15 @@ def validate(passport):
 
 
 def process_input(input_str):
-    stripped = input_str.replace('\n', ' ')
-    chunks = stripped.split('  ')
-    chunks = [chunk.split(' ') for chunk in chunks]
+    passports = split_at(input_str, lambda x: x == '')
 
-    def process_chunks(chunk):
-        split_items = [item.split(":") for item in chunk]
-        return {item[0]: item[1] for item in split_items if item[0] != 'cid'}
+    def process_passports(passport):
+        fields = flatten(map(lambda x: x.split(' '), passport))
+        split_fields = map(lambda x: x.split(':'), fields)
+        filtered = filter(lambda x: x[0] != 'cid', split_fields)
+        return dict(filtered)
 
-    return map(process_chunks, chunks)
+    return map(process_passports, passports)
 
 
 def filter_missing_keys(passport):
